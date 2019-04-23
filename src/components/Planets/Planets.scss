@@ -1,126 +1,46 @@
-.cards-list {
-  position: relative;
-  height: 100%;
-  width: 1042px;
-  margin: 0 auto;
-  margin-top: 20px;
-  opacity: 0;
-  transition: transform 1.5s ease-in-out, filter 1s linear;
-  animation-name: cards-list-render;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes cards-list-render {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.cards-list-transform {
-  //@at-rootfilter: blur(5px) !important;
-  transform: scale(0.95) !important;
-  transition: transform 1s ease-in-out !important;
-}
-
-.card {
-  position: absolute;
-  width: 460px;
-  height: 120px;
-  margin: 20px;
-  z-index: 1;
-  cursor: pointer;
-  transition: transform 1s ease-in-out, z-index 1.2s ease-in-out,
-    opacity 1s ease-in-out;
-}
-
-.card:hover .long-title {
-  opacity: 1;
-}
-:root {
-  --card-selected-x: 150px;
-  --card-selected-y: 250px;
-}
-
-.card-selected {
-  z-index: 200 !important;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(2.1)
-    translate(var(--card-selected-x), var(--card-selected-y)) !important;
-  transition: transform 1s ease-in-out, z-index 1s ease-in-out,
-    opacity 0.3s ease-in-out;
-}
-
-.card-not-selected {
-  pointer-events: none !important;
-  opacity: 0.1 !important;
-}
-
-.card-hide {
-  display: none !important;
-}
-
-.header-image {
-  position: relative;
+.planets {
   display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 460px;
-  height: 110px;
-  font-size: 8px;
-  color: #8ccff1bd;
-  background-color: #303d56be;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  border-top: 0.5px solid #0d121bbe;
-  border-radius: 3px 3px 0 0;
-  filter: grayscale(0.6);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: padding 0.5s ease-in, font-size 0.5s ease-in, height 0.5s ease-in,
-    opacity 0.5s ease-in, color 0.5s ease-in, background-color 0.5s ease-in,
-    border-top 0.5s ease-in;
+  flex-direction: column;
+  align-items: left;
+  margin: 0 auto;
+  width: 1200px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  color: rgb(255, 255, 255);
 }
 
-.long-title {
-  font-size: 14px;
-  padding: 5px 0;
-  text-align: center;
-  color: #61efff;
-  //color: #b0ccff69;
-  text-shadow: #61efff 0px 0px 4px;
-  padding: 5px 5px;
-  text-transform: capitalize;
-  border-radius: 3px;
-  background-color: #303d56be;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  opacity: 0;
-  transition: opacity 0.1s ease-in;
+.planet {
+  padding-top: 20px;
 }
 
-.long-title-selected {
-  color: #61efff;
-  border-radius: 0px;
-  box-shadow: none;
-  text-shadow: #61efff 0px 0px 4px;
-  background-color: #303d56be;
-  opacity: 1;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+.planet .title {
+  font-size: 24px;
+  text-align: left;
 }
 
-.cards-list-footer-hide {
-  opacity: 0;
-  pointer-events: none;
+.residents {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  padding-top: 20px;
+  padding-left: 50px;
 }
 
-.cards-not-found {
-  font-size: 35px;
-  text-align: center;
-  margin-top: 100px;
-  color: #64aaec;
-  text-shadow: #64aaec 0px 0px 2px;
+.resident {
+  display: flex;
+  margin-top: 20px;
+}
+
+.resident-gender {
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.species {
+  padding-left: 20px;
+  padding-top: 10px;
+  color: rgba(183, 215, 233, 0.5);
+}
+
+.species span {
+  color: rgba(155, 255, 242, 0.6);
 }

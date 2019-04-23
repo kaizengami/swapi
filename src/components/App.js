@@ -42,51 +42,64 @@ class App {
     }
   }
 
-  async createAppData() {
-    await this.getApiData()
-      .then(data => {
-        const planets = data.results;
-        let newData = this.createPlanets(planets);
-        console.log(data);
-        return Promise.all(
-          newData.map(async (planet, i) => {
-            if (planet.residentsUrl.length) {
-              await Promise.all(
-                planet.residentsUrl.map(async residentUrl => {
-                  let residentDataRaw = await this.getSwapiData(residentUrl);
-                  let residentData = this.createResident(residentDataRaw);
-                  newData[i].residentsData.push(residentData);
-                })
-              );
-            }
-            return planet;
-          })
-        );
+  async createResidentsData(planets) {
+    return Promise.all(
+      planets.map(async (planet, i) => {
+        if (planet.residentsUrl.length) {
+          await Promise.all(
+            planet.residentsUrl.map(async residentUrl => {
+              let residentDataRaw = await this.getSwapiData(residentUrl);
+              let residentData = this.createResident(residentDataRaw);
+              planets[i].residentsData.push(residentData);
+            })
+          );
+        }
+        return planet;
       })
-      .then(data => {
-        data.map((planet, i) => {
-          let residents = planet.residentsData;
-          if (residents.length) {
-            residents.forEach(async (resident, n) => {
+    );
+  }
+
+  async createSpeciesData(planets) {
+    return Promise.all(
+      planets.map(async (planet, i) => {
+        let residents = planet.residentsData;
+        if (residents.length) {
+          await Promise.all(
+            residents.map(async (resident, n) => {
               if (resident.speciesUrl.length) {
                 let speciesDataRaw = await this.getSwapiData(
                   resident.speciesUrl
                 );
                 let speciesData = this.createSpecies(speciesDataRaw);
-                data[i].residentsData[n].speciesData.push(speciesData);
+                planets[i].residentsData[n].speciesData.push(speciesData);
               }
-            });
-          }
-        });
-        console.log(data);
-        return data;
-      });
+            })
+          );
+        }
+        return planet;
+      })
+    );
+  }
+
+  async createAppData() {
+    try {
+      const data = await this.getApiData();
+      console.log(data);
+      const planetsRaw = data.results;
+      let planets = this.createPlanets(planetsRaw);
+      const planetsWithResidents = await this.createResidentsData(planets);
+      const planetsWithResidentsAndSpecies = await this.createSpeciesData(
+        planetsWithResidents
+      );
+      return planetsWithResidentsAndSpecies;
+    } catch (err) {
+      return err;
+    }
   }
 
   async render() {
     this.state.data = await this.createAppData();
-    console.log(this.state.data);
-    this.host.innerHTML = this.planets.render();
+    this.host.innerHTML = this.planets.render(this.state.data);
   }
 }
 
