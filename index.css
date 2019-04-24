@@ -1,0 +1,29 @@
+#countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #92dfe2;
+  /*animation: countdown 1s ease-in 0s 3;*/
+  transition: 1s ease-out;
+  font-size: 600px;
+  opacity: 1;
+}
+
+@keyframes countdown {
+  0% {
+    font-size: 600px;
+    opacity: 1;
+  }
+  100% {
+    font-size: 0px;
+    opacity: 0;
+  }
+}
+
+.countdown-hide {
+  font-size: 0px !important;
+  opacity: 0 !important;
+}
