@@ -25,11 +25,25 @@ function getData() {
           planetsWithResidents[i]
         );
       });
-      console.log(planetsDataFinal);
-      return planetsWithResidents;
+      return planetsDataFinal;
+    })
+    .then(planetsDataFinal => {
+      //console.log(planetsDataFinal);
+      planetsDataFinal.forEach(planet => {
+        planet.residentsData.forEach(resident => {
+          if (resident != undefined) {
+            addObjProperty(resident, "speciesData", []);
+          }
+        });
+      });
+      return planetsDataFinal;
+    })
+    .then(planetsDataFinal => {
+      let planetsWithResidentsAndSpecies = createSpeciesData(planetsDataFinal);
+      return planetsWithResidentsAndSpecies;
     })
     .then(planetsWithResidentsAndSpecies => {
-      console.log(planetsWithResidentsAndSpecies);
+      console.log(planetsDataFinal);
     })
     .catch(err => console.log("Fetch Error :", err));
 }
@@ -54,7 +68,27 @@ function createResidentsData(planets) {
   );
 }
 
-function createSpeciesData(planets) {}
+function createSpeciesData(planets) {
+  return Promise.all(
+    planets.map((planet, i) => {
+      let residents = planet.residentsData;
+      return Promise.all(
+        residents.map((resident, n) => {
+          let url = resident.species[0];
+          if (url != undefined) {
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                planetsDataFinal[i].residentsData[n].speciesData.push(data);
+                return data;
+              })
+              .catch(err => console.log("Fetch Error :", err));
+          }
+        })
+      );
+    })
+  );
+}
 
 function addObjProperty(obj, key, value) {
   Object.defineProperty(obj, key, {
