@@ -67,6 +67,11 @@ a {
   text-decoration: none;
 }
 
+header {
+  margin-top: 20px;
+  text-align: center;
+}
+
 .main {
   position: absolute;
   height: 100%;
@@ -91,6 +96,7 @@ $bxshadow-medium: box-shadow(500);
 $bxshadow-small: box-shadow(800);
 
 .stars.large {
+  position: fixed;
   height: 3px;
   width: 3px;
   background: transparent;
@@ -98,6 +104,7 @@ $bxshadow-small: box-shadow(800);
   animation: blink-large 7s infinite;
 }
 .stars.medium {
+  position: fixed;
   height: 2px;
   width: 2px;
   background: transparent;
@@ -105,6 +112,7 @@ $bxshadow-small: box-shadow(800);
   animation: blink-medium 5s infinite;
 }
 .stars.small {
+  position: fixed;
   height: 1px;
   width: 1px;
   background: transparent;
