@@ -28,11 +28,10 @@ function getData() {
       return planetsDataFinal;
     })
     .then(planetsDataFinal => {
-      //console.log(planetsDataFinal);
       planetsDataFinal.forEach(planet => {
         planet.residentsData.forEach(resident => {
           if (resident != undefined) {
-            addObjProperty(resident, "speciesData", []);
+            addObjProperty(resident, "speciesData", {});
           }
         });
       });
@@ -79,7 +78,9 @@ function createSpeciesData(planets) {
             fetch(url)
               .then(response => response.json())
               .then(data => {
-                planetsDataFinal[i].residentsData[n].speciesData.push(data);
+                let residentSpeciesData =
+                  planetsDataFinal[i].residentsData[n].speciesData;
+                Object.assign(residentSpeciesData, data);
                 return data;
               })
               .catch(err => console.log("Fetch Error :", err));
@@ -98,10 +99,6 @@ function addObjProperty(obj, key, value) {
     configurable: true
   });
   return obj;
-}
-
-function mapResidentsData(planets) {
-  return new Promise(function(resolve, reject) {});
 }
 
 getData();
